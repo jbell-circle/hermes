@@ -41,3 +41,31 @@ func TestFoo(t *testing.T) {
 	router.ServeHTTP(rr, req)
 	assert.Equal(t, rr.Code, http.StatusCreated)
 }
+
+func TestBar(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	addrCtrl := mocks.NewMockAddressController(ctrl)
+
+	addrView := NewAddressView(addrCtrl)
+
+	router := httprouter.New()
+	addrView.Register(router)
+
+	address := models.Address{
+		Name:     "Circle",
+		Address1: "99 High St",
+		City:     "Boston",
+		State:    "MA",
+		ZipCode:  "02110",
+	}
+	addrCtrl.EXPECT().
+		GetAddress(gomock.Eq("circle")).
+		Return(address, nil)
+
+	req := httptest.NewRequest("GET", "/addresses/circle", nil)
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+
+	router.ServeHTTP(rr, req)
+	assert.Equal(t, rr.Code, http.StatusOK)
+}

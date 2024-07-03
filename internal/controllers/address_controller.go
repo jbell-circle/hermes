@@ -8,6 +8,7 @@ import (
 
 type AddressController interface {
 	CreateAddress(id string, addr models.Address) (models.Address, error)
+	GetAddress(id string) (models.Address, error)
 }
 
 func NewAddressController(addrDAO models.AddressDAO) AddressController {
@@ -22,4 +23,8 @@ type addressControllerImpl struct {
 
 func (ctrl *addressControllerImpl) CreateAddress(id string, addr models.Address) (models.Address, error) {
 	return ctrl.addrDAO.Create(id, addr)
+}
+
+func (ctrl *addressControllerImpl) GetAddress(id string) (models.Address, error) {
+	panic("implement me")
 }
