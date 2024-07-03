@@ -3,8 +3,6 @@ package controllers
 //go:generate mockgen -destination=../mocks/address_controller_mocks.go -package=mocks . AddressController
 
 import (
-	"log"
-
 	"github.com/jbell-circle/hermes/internal/models"
 )
 
@@ -12,14 +10,16 @@ type AddressController interface {
 	CreateAddress(id string, addr models.Address) (models.Address, error)
 }
 
-func NewAddressController() AddressController {
-	return &addressControllerImpl{}
+func NewAddressController(addrDAO models.AddressDAO) AddressController {
+	return &addressControllerImpl{
+		addrDAO: addrDAO,
+	}
 }
 
-type addressControllerImpl struct{}
+type addressControllerImpl struct {
+	addrDAO models.AddressDAO
+}
 
 func (ctrl *addressControllerImpl) CreateAddress(id string, addr models.Address) (models.Address, error) {
-	// TODO: implement me
-	log.Printf("[WARN] implement me")
-	return addr, nil
+	return ctrl.addrDAO.Create(id, addr)
 }

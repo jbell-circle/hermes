@@ -7,12 +7,16 @@ import (
 	"github.com/julienschmidt/httprouter"
 
 	"github.com/jbell-circle/hermes/internal/controllers"
+	"github.com/jbell-circle/hermes/internal/models"
 	"github.com/jbell-circle/hermes/internal/views"
 )
 
 func Run(addr string) error {
+	// DAOs
+	addrDAO := models.NewAddressDAO()
+
 	// controllers
-	addrCtrl := controllers.NewAddressController()
+	addrCtrl := controllers.NewAddressController(addrDAO)
 
 	// views
 	addrView := views.NewAddressView(addrCtrl)
