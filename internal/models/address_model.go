@@ -18,6 +18,7 @@ type Address struct {
 
 type AddressDAO interface {
 	Create(id string, addr Address) (Address, error)
+	Get(id string) (Address, error)
 }
 
 func NewAddressDAO() AddressDAO {
@@ -33,6 +34,15 @@ func (dao *addressDAOMemory) Create(id string, addr Address) (Address, error) {
 	retAddr, ok := val.(Address)
 	if !ok {
 		return Address{}, errors.New("unexpected type returned from addressDAOMemory store")
+	}
+	return retAddr, nil
+}
+
+func (dao *addressDAOMemory) Get(id string) (Address, error) {
+	val, _ := dao.store.Load(id)
+	retAddr, ok := val.(Address)
+	if !ok {
+		return Address{}, errors.New("address not found in addressDAOMemory store")
 	}
 	return retAddr, nil
 }

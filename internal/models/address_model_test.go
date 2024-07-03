@@ -33,3 +33,21 @@ func TestAddressDAOMemory_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, addr, retAddr)
 }
+
+func TestAddressDAOMemory_Get(t *testing.T) {
+	addrDAO := NewAddressDAO()
+
+	id, addr := "circle", Address{
+		Name:     "Circle",
+		Address1: "99 High St",
+		City:     "Boston",
+		State:    "MA",
+		ZipCode:  "02110",
+	}
+	_, err := addrDAO.Create(id, addr)
+	assert.NoError(t, err)
+
+	retAddr, err := addrDAO.Get("circle")
+	assert.NoError(t, err)
+	assert.Equal(t, addr, retAddr)
+}

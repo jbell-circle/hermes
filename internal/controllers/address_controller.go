@@ -26,5 +26,5 @@ func (ctrl *addressControllerImpl) CreateAddress(id string, addr models.Address)
 }
 
 func (ctrl *addressControllerImpl) GetAddress(id string) (models.Address, error) {
-	panic("implement me")
+	return ctrl.addrDAO.Get(id)
 }
