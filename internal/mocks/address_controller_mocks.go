@@ -2,6 +2,7 @@
 // Source: github.com/jbell-circle/hermes/internal/controllers (interfaces: AddressController)
 
 // Package mocks is a generated GoMock package.
+// Test
 package mocks
 
 import (
