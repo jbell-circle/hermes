@@ -74,4 +74,4 @@ Now implement your feature!
   - Then checkout back to your branch, `git checkout <your-branch>` and `git rebase <original-rebase>` the new changes on top of yours.
 
 - Q: What if the branch my changes are based on get merged main/master?
-  - A: checkout the main branch, `git checkout main`, and rebase `git rebase main` the changes on top of yours.
+  - A: we usually use "squash and merge" at Circle so there will be a new commit history. So you'll have to use the `--onto` flag to find the common ancestor. Suppose you have a `main` branch, a feature branch `f1`, and a feature branch `f2` that's based off `f1`. When `f1` gets squash merged into `main`, from `f2` you can then run `git rebease --onto main f1` to rebase onto the common ancestor.
