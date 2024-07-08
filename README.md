@@ -67,6 +67,8 @@ git checkout -b implementGetAddress
 
 Now implement your feature!
 
+test!!
+
 ### Q&A
 
 - Q: What if the branch my changes are based on gets updated?
