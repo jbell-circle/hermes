@@ -48,3 +48,18 @@ func (mr *MockAddressControllerMockRecorder) CreateAddress(arg0, arg1 interface{
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAddress", reflect.TypeOf((*MockAddressController)(nil).CreateAddress), arg0, arg1)
 }
+
+// GetAddress mocks base method.
+func (m *MockAddressController) GetAddress(arg0 string) (models.Address, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAddress", arg0)
+	ret0, _ := ret[0].(models.Address)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAddress indicates an expected call of GetAddress.
+func (mr *MockAddressControllerMockRecorder) GetAddress(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAddress", reflect.TypeOf((*MockAddressController)(nil).GetAddress), arg0)
+}

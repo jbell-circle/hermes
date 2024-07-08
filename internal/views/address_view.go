@@ -13,6 +13,7 @@ import (
 
 const (
 	pathPostAddresses = "/addresses/:id"
+	pathGetAddresses  = "/addresses/:id"
 )
 
 type AddressView struct {
@@ -27,6 +28,7 @@ func NewAddressView(addrCtrl controllers.AddressController) *AddressView {
 
 func (view *AddressView) Register(router *httprouter.Router) {
 	router.POST(pathPostAddresses, view.CreateAddress)
+	router.GET(pathGetAddresses, view.GetAddress)
 }
 
 func (view *AddressView) CreateAddress(w http.ResponseWriter, req *http.Request, params httprouter.Params) {
@@ -56,4 +58,22 @@ func (view *AddressView) CreateAddress(w http.ResponseWriter, req *http.Request,
 	}
 
 	log.Printf("[DEBUG] created address (%s)\n", id)
+}
+
+func (view *AddressView) GetAddress(w http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+	id := params.ByName("id")
+
+	addr, err := view.addrCtrl.GetAddress(id)
+	if err != nil {
+		log.Printf("[ERROR] failed to get address (%s): %s\n", id, err)
+	}
+
+	enc := json.NewEncoder(w)
+	if err := enc.Encode(addr); err != nil {
+		log.Printf("[ERROR] failed to encode response body: %s\n", err)
+		http.Error(w, "Something went wrong.", http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("[DEBUG] got address (%s)\n", id)
 }
